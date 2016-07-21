@@ -132,28 +132,14 @@ module.exports = function(ngModule) {
                 }
             }
         }
-    }).directive('ngTranscludeReplace', ['$log', function ($log) {
-              return {
-                //  terminal: true,
-                  restrict: 'EA',
-
-                  link: function ($scope, $element, $attr, ctrl, transclude) {
-                      if (!transclude) {
-                          $log.error('orphan',
-                                     'Illegal use of ngTranscludeReplace directive in the template! ' +
-                                     'No parent directive that requires a transclusion found. ');
-                          return;
-                      }
-
-                      transclude($scope,function (clone) {
-                          if (clone.length) {
-                              $element.replaceWith(clone);
-                          }
-                          else {
-                              $element.remove();
-                          }
-                      },null,'cell');
-                  }
-              };
-          }]);
+    }).directive('customCells', function () {
+        return {
+            restrict: 'E',
+            link: function ($scope, $element, $attr, ctrl, transclude) {
+                transclude($scope,function (clone) {
+                    $element.replaceWith(clone);
+                },null,'cell');
+            }
+        };
+    });
 }
