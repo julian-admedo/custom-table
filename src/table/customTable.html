@@ -1,0 +1,28 @@
+<div >
+    <table-container>
+
+        <header-section>
+
+        </header-section>
+
+        <body-section>
+
+            <row ng-repeat="row in data"
+                data-index="{{$index}}"
+                data-key="{{row.id}}"
+                data-parent="{{row.parent}}"
+                ng-class="{
+                    'child-row':row.parent,
+                    'parent-row' : !row.parent
+                }">
+                <cell class='iconColumn'>
+                    <i class="fa" ng-class="{'fa-mail-reply': row.parent}" aria-hidden="true"></i>
+                </cell>
+                <ng-transclude-replace ng-transclude-replace='cell'>
+                </ng-transclude-replace>
+            </row>
+
+        </body-section>
+
+    </table-container>
+</div>
