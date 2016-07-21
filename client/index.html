@@ -29,46 +29,46 @@
         }
 
         @keyframes slideDown{
-        0% {
-            opacity: 0;
-            transform:translateY(-10px);
-        }
-        50% {
-            opacity:0.3;
-        }
-        100% {
-            opacity: 1;
-            transform:translateY(0px);
-        }
+            0% {
+                opacity: 0;
+                transform:translateY(-10px);
+            }
+            50% {
+                opacity:0.3;
+            }
+            100% {
+                opacity: 1;
+                transform:translateY(0px);
+            }
         }
 
         @keyframes slideUp{
-        0% {
-            opacity: 1;
-            transform:translateY(0px);
-        }
-        50% {
-            opacity:0.3;
-        }
-        100% {
-            opacity: 0;
-            transform:translateY(-10px);
-        }
+            0% {
+                opacity: 1;
+                transform:translateY(0px);
+            }
+            50% {
+                opacity:0.3;
+            }
+            100% {
+                opacity: 0;
+                transform:translateY(-10px);
+            }
         }
 
         tr.ng-enter  {
-            -webkit-animation:slideDown .3s ease-out;
-            -moz-animation:slideDown .3s ease-out;
-                -ms-animation:slideDown .3s ease-out;
-                -o-animation:slideDown .3s ease-out;
-                    animation:slideDown .3s ease-out;
+            -webkit-animation:slideDown .1s ease-out;
+            -moz-animation:slideDown .1s ease-out;
+                -ms-animation:slideDown .1s ease-out;
+                -o-animation:slideDown .1s ease-out;
+                    animation:slideDown .1s ease-out;
         }
         tr.ng-leave  {
-            -webkit-animation:slideUp .3s ease-out;
-            -moz-animation:slideUp .3s ease-out;
-                -ms-animation:slideUp .3s ease-out;
-                -o-animation:slideUp .3s ease-out;
-                    animation:slideUp .3s ease-out;
+            -webkit-animation:slideUp .1s ease-out;
+            -moz-animation:slideUp .1s ease-out;
+                -ms-animation:slideUp .1s ease-out;
+                -o-animation:slideUp .1s ease-out;
+                    animation:slideUp .1s ease-out;
         }
 
     </style>
@@ -103,14 +103,13 @@
         </table>
 -->
         <custom-table data="vm.data" get-children="vm.getChildren(id)" >
-
                 <header>Name</header>
-                 <cell>
+                <cell>
                     <parent>
                          {{row.name}}
                     </parent>
                     <child>
-                        <span style='color:red'>{{row.name}}</span>
+                        <input type='text' ng-model='row.name'></input>
                     </child>
                 </cell>
 
@@ -121,7 +120,6 @@
 
                 <header>Country</header>
                 <cell>{{row.country}}</cell>
-
         </custom-table>
 
     </div>

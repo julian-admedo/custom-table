@@ -7,23 +7,19 @@ module.exports = function(ngModule) {
             scope:{
                 data:'=',
                 getChildren:'&'
-            }
-            ,
+            },
             transclude: {
                 'header':'header',
                 'cell':'cell'
                 },
             link: function (scope,el,attrs,ctrl,transclude) {
-
                 var headerElement = el.find('thead');
-
                 transclude(scope,function(clone){
                     var headerRow = $('<tr></tr>');
                     headerRow.append('<th class="iconColumn"></th>');
                     headerRow.append(clone);
                     headerElement.append(headerRow);
                 },headerElement,'header');
-
             },
             template: require('./customTable.html')
         };
@@ -35,7 +31,7 @@ module.exports = function(ngModule) {
             transclude:true,
             template:'<td></td>',
             link: function (scope,el,attrs,d,transclude) {
-                transclude(scope.$parent, function(clone, scope) {
+                transclude(scope.$parent, function(clone) {
                     el.append(clone);
                     el.find('input').on('click',function(e){
                         e.stopPropagation();
