@@ -8,7 +8,7 @@ angular.module('customTable',[]).directive('customTable', function () {
         },
         transclude: {
             'column':'column'
-            },
+        },
         link: function (scope,el,attr,ctrl,transclude) {
             var headerElement = el.find('thead');
             transclude(scope,function(clone){
@@ -21,21 +21,12 @@ angular.module('customTable',[]).directive('customTable', function () {
                 headerElement.append(headerRow);
             },null,'column');
         },
-        template: require('./customTable.html')
-        }
-    }).directive('parent', function(){
-        return {
-            restrict: 'E',
-            transclude:true,
-            template:'<ng-transclude ng-if="!row.parent" ></ng-transclude>'
-
-        }
-    })
-    .directive('child', function(){
-        return {
-            restrict: 'E',
-            transclude:true,
-            template:'<ng-transclude ng-if="row.parent" ></ng-transclude>'
+        template:   '<div><table-container><header-section/><body-section>' +
+                    '<row ng-repeat="row in data track by $index"' +
+                    'ng-click="toggle(row,$index)"' +
+                    'ng-class="{ \'child-row\':row.parent, \'parent-row\' : !row.parent }">' +
+                    '<cells></cells>' +
+                    '</row></body-section></table-container></div>'
         }
     }).directive('headerSection', function(){
         return {
@@ -63,33 +54,26 @@ angular.module('customTable',[]).directive('customTable', function () {
             restrict: 'E',
             replace: true,
             transclude: true,
+            scope:true,
             template:'<tr ng-transclude></tr>',
             link: function (scope,el,attr,ctrl,transclude) {
-                var childrenCount = 0;
-                var icon = el.find('i');
                 scope.toggle = toggle;
-                function toggle() {
-                    if (!scope.row.parent) {
-                        var rowid = scope.row.id;
-                        var rowIndex = parseInt(scope.$index,10);
-                        if (!el.attr('data-expanded')) {
-                            scope.getChildren({id: rowid}).then(function(data) {
-                                childrenCount = data.length;
+                function toggle(row, index) {
+                    if (!row.parent) {
+                        if (!row.expanded) {
+                            scope.getChildren({id: row.id}).then(function(data) {
+                                row.children = data.length;
                                 data = data.map(function(item){
-                                    item.parent = rowid;
+                                    item.parent = row.id;
                                     return item;
                                 });
-                                scope.data.splice.apply(scope.data, [rowIndex+1, 0].concat(data));
-                                el.attr('data-expanded',true);
-                                icon.removeClass('fa-plus');
-                                icon.addClass('fa-minus');
+                                scope.data.splice.apply(scope.data, [index + 1, 0].concat(data));
+                                row.expanded = true;
                             });
                         }
                         else {
-                            scope.data.splice(rowIndex+1,childrenCount);
-                            el.removeAttr('data-expanded');
-                            icon.removeClass('fa-minus');
-                            icon.addClass('fa-plus');
+                            scope.data.splice(index + 1, row.children);
+                            row.expanded = false;
                         }
                     }
                 }
@@ -99,15 +83,27 @@ angular.module('customTable',[]).directive('customTable', function () {
         return {
             restrict: 'E',
             link: function (scope, el, attr, ctrl, transclude) {
-                var icon = angular.element('<i class="fa fa-plus" ng-class="{\'fa-mail-reply\': row.parent}" aria-hidden="true"></i>');
+                var icon = angular.element('<i class="fa fa-plus" aria-hidden="true"></i>');
+                icon.attr('ng-class','{"fa-mail-reply": row.parent,"fa-plus": !row.parent && !row.expanded,"fa-minus": !row.parent && row.expanded}');
                 var iconCell = angular.element('<td class="iconColumn"></td>');
                 iconCell.append(icon);
                 el.parent().append($compile(iconCell)(scope.$parent));
-
-                transclude(scope,function(clone) {
-                    var templates = clone.find('template');
-                    for (var i=0; i < templates.length; i++){
-                        var cell = angular.element('<td>' + templates[i].innerHTML + '</td>');
+                transclude(scope,function(columns) {
+                    for (var j=0; j< columns.length; j++) {
+                        var templates = angular.element(columns[j]).find('template');
+                        var content = "";
+                        for (var i=0; i < templates.length; i++){
+                            if (templates[i].attributes.child) {
+                                content += '<span ng-if="row.parent">' + templates[i].innerHTML + '</span>';
+                            }
+                            else if (templates[i].attributes.parent) {
+                                content += '<span ng-if="!row.parent">' + templates[i].innerHTML+ '</span>';
+                            }
+                            else {
+                                content = templates[i].innerHTML;
+                            }
+                        }
+                        var cell = angular.element('<td>' + content + '</td>');
                         el.parent().append($compile(cell)(scope.$parent));
                     }
                     el.remove();

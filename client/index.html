@@ -6,6 +6,9 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
     <style>
+        h1 {
+            text-align: center;
+        }
         .child-row {
             color: #999;
         }
@@ -71,6 +74,7 @@
         <h1>Custom Table Demo</h1>
 
         <custom-table data="vm.data" get-children="vm.getChildren(id)" >
+
                 <column>
                     <header>Name</header>
                     <template>
@@ -80,7 +84,10 @@
 
                 <column>
                     <header>Age</header>
-                    <template>
+                    <template parent>
+                        <strong>{{row.age}}</strong>
+                    </template>
+                    <template child>
                         <span ng-bind="row.age"></span>
                     </template>
                 </column>
@@ -89,6 +96,7 @@
                     <header>Country</header>
                     <template>{{row.country}}</template>
                 </column>
+
         </custom-table>
     </div>
     <script src="/bundle.js"></script>

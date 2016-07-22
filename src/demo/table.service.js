@@ -28,9 +28,9 @@ module.exports = function(ngModule){
                         break;
                     case 3:
                         children = [
-                            {name: 'Edward', age: 4, country: 'Ireland'},
-                            {name: 'Johann', age: 6, country: 'Ireland'},
-                            {name: 'Rita', age: 2, country: 'Ireland'}
+                            {name: 'Edward', age: 5, country: 'Ireland'},
+                            {name: 'Johann', age: 9, country: 'Ireland'},
+                            {name: 'Rita', age: 8, country: 'Ireland'}
                         ]
                         break;
                 }
