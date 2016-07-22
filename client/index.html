@@ -71,28 +71,24 @@
         <h1>Custom Table Demo</h1>
 
         <custom-table data="vm.data" get-children="vm.getChildren(id)" >
-                <header>Name</header>
-                <cell>
-                    <parent>
-                         {{row.name}}
-                    </parent>
-                    <child>
-                        <input type='text' ng-model='row.name'></input>
-                    </child>
-                </cell>
+                <column>
+                    <header>Name</header>
+                    <template>
+                        <input type="text" ng-model="row.name" />
+                    </template>
+                </column>
 
-                <header>Age</header>
-                <cell>
-                    <input type='text' ng-model='row.age'></input>
-                </cell>
+                <column>
+                    <header>Age</header>
+                    <template>
+                        <span ng-bind="row.age"></span>
+                    </template>
+                </column>
 
-                <header>Town</header>
-                <cell>
-                    <input type='text' ng-model='row.town'></input>
-                </cell>
-
-                <header>Country</header>
-                <cell>{{row.country}}</cell>
+                <column>
+                    <header>Country</header>
+                    <template>{{row.country}}</template>
+                </column>
         </custom-table>
     </div>
     <script src="/bundle.js"></script>
