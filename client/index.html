@@ -70,7 +70,7 @@
 </head>
 
 <body>
-    <div ng-controller="tableController as vm">
+    <div ng-controller="tableController as vm" ng-cloak>
         <h1>Custom Table Demo</h1>
 
         <custom-table vm="vm" data="vm.data" get-children="vm.getChildren(id)" >
@@ -78,8 +78,10 @@
                 <column>
                     <header>Name</header>
                     <template>
-                        <input type="text" ng-model="row.name" />
-                        <button class="btn btn-sm" ng-click="vm.buttonClick(row.name)">Click me</button>
+                        <form class="form form-inline">
+                            <input class="form-control" type="text" ng-model="row.name" />
+                            <button class="btn btn-sm" ng-click="vm.buttonClick(row.name)">Click me</button>
+                        </form>
                     </template>
                 </column>
 
