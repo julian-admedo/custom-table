@@ -49,7 +49,7 @@ angular.module('customTable',[]).directive('customTable', function () {
             transclude:true,
             template:'<table class="table table table-hover table-striped" ng-transclude></table>'
         }
-    }).directive('row', function($compile){
+    }).directive('row', function(){
         return {
             restrict: 'E',
             replace: true,
