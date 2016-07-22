@@ -12,10 +12,10 @@ module.exports = function(ngModule) {
                 'header':'header',
                 'cell':'cell'
                 },
-            link: function (scope,el,attrs,ctrl,transclude) {
+            link: function (scope,el,attr,ctrl,transclude) {
                 var headerElement = el.find('thead');
                 transclude(scope,function(clone){
-                    var headerRow = $('<tr></tr>');
+                    var headerRow = angular.element('<tr></tr>');
                     headerRow.append('<th class="iconColumn"></th>');
                     headerRow.append(clone);
                     headerElement.append(headerRow);
@@ -30,7 +30,7 @@ module.exports = function(ngModule) {
             replace:true,
             transclude:true,
             template:'<td></td>',
-            link: function (scope,el,attrs,d,transclude) {
+            link: function (scope,el,attr,d,transclude) {
                 transclude(scope.$parent, function(clone) {
                     el.append(clone);
                     el.find('input').on('click',function(e){
@@ -93,7 +93,7 @@ module.exports = function(ngModule) {
             replace: true,
             transclude: true,
             template:'<tr ng-transclude></tr>',
-            link: function ($scope,el,attr) {
+            link: function (scope,el,attr) {
                 var childrenCount = 0;
                 var icon = el.find('i');
                 var isParent = !attr['parent'];
@@ -104,22 +104,22 @@ module.exports = function(ngModule) {
                 function toggle() {
                     var rowid = attr['key'];
                     var rowIndex = parseInt(attr['index'],10);
-                    $scope.$apply(function() {
+                    scope.$apply(function() {
                         if (!el.attr('data-expanded')) {
-                            $scope.getChildren({id: rowid}).then(function(data) {
+                            scope.getChildren({id: rowid}).then(function(data) {
                                 childrenCount = data.length;
                                 data = data.map(function(item){
                                     item.parent = rowid;
                                     return item;
                                 });
-                                $scope.data.splice.apply($scope.data, [rowIndex+1, 0].concat(data));
+                                scope.data.splice.apply(scope.data, [rowIndex+1, 0].concat(data));
                                 el.attr('data-expanded',true);
                                 icon.removeClass('fa-plus');
                                 icon.addClass('fa-minus');
                             });
                         }
                         else {
-                            $scope.data.splice(rowIndex+1,childrenCount);
+                            scope.data.splice(rowIndex+1,childrenCount);
                             el.removeAttr('data-expanded');
                             icon.removeClass('fa-minus');
                             icon.addClass('fa-plus');
@@ -131,9 +131,9 @@ module.exports = function(ngModule) {
     }).directive('customCells', function () {
         return {
             restrict: 'E',
-            link: function ($scope, $element, $attr, ctrl, transclude) {
-                transclude($scope,function (clone) {
-                    $element.replaceWith(clone);
+            link: function (scope, el, attr, ctrl, transclude) {
+                transclude(scope,function (clone) {
+                    el.replaceWith(clone);
                 },null,'cell');
             }
         };
