@@ -10,6 +10,9 @@ module.exports = function(ngModule){
 
             vm.getChildren = tableService.getChildren;
 
+            vm.buttonClick = function() {
+                alert('button clicked');
+            }
 
         }]);
 }

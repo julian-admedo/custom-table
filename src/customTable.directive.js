@@ -2,7 +2,8 @@ angular.module('customTable',[]).directive('customTable', function () {
     return {
         restrict: 'E',
         replace: true,
-        scope:{
+        scope: {
+            vm:'=',
             data:'=',
             getChildren:'&'
         },
@@ -11,15 +12,15 @@ angular.module('customTable',[]).directive('customTable', function () {
         },
         link: function (scope,el,attr,ctrl,transclude) {
             var headerElement = el.find('thead');
-            transclude(scope,function(clone){
+            transclude(scope, function(columns) {
                 var headerRow = angular.element('<tr></tr>');
                 headerRow.append('<th class="iconColumn"></th>');
-                var headers = clone.find('header');
+                var headers = columns.find('header');
                 for (var i=0;i<headers.length;i++){
                     headerRow.append('<th>' + headers[i].innerHTML + '</th>');
                 }
                 headerElement.append(headerRow);
-            },null,'column');
+            }, null, 'column');
         },
         template:   '<div><table-container><header-section/><body-section>' +
                     '<row ng-repeat="row in data track by $index"' +
@@ -104,6 +105,12 @@ angular.module('customTable',[]).directive('customTable', function () {
                             }
                         }
                         var cell = angular.element('<td>' + content + '</td>');
+                        cell.find('input').on('click', function(e) {
+                            e.stopPropagation();
+                        });
+                        cell.find('button').on('click', function(e) {
+                            e.stopPropagation();
+                        });
                         el.parent().append($compile(cell)(scope.$parent));
                     }
                     el.remove();

@@ -10,7 +10,7 @@
             text-align: center;
         }
         .child-row {
-            color: #999;
+            color:#999;
         }
         .parent-row {
             cursor: pointer;
@@ -69,16 +69,16 @@
     </style>
 </head>
 <body>
-    <vs-navbar></vs-navbar>
     <div ng-controller="tableController as vm">
         <h1>Custom Table Demo</h1>
 
-        <custom-table data="vm.data" get-children="vm.getChildren(id)" >
+        <custom-table vm="vm" data="vm.data" get-children="vm.getChildren(id)" >
 
                 <column>
                     <header>Name</header>
-                    <template>
+                    <template parent>
                         <input type="text" ng-model="row.name" />
+                        <button class="btn" ng-click="vm.buttonClick(row.name)">Click me</button>
                     </template>
                 </column>
 
