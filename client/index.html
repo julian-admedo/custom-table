@@ -6,20 +6,16 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
     <style>
-
         .child-row {
             color: #999;
         }
-
         .parent-row {
             cursor: pointer;
         }
-
         .iconColumn
         {
             width:50px;
         }
-
         .fa-mail-reply {
             margin-left:10px;
             color:#ccc;
@@ -27,7 +23,6 @@
             -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
             transform: rotate(180deg);
         }
-
         @keyframes slideDown{
             0% {
                 opacity: 0;
@@ -41,7 +36,6 @@
                 transform:translateY(0px);
             }
         }
-
         @keyframes slideUp{
             0% {
                 opacity: 1;
@@ -55,7 +49,6 @@
                 transform:translateY(-10px);
             }
         }
-
         tr.ng-enter  {
             -webkit-animation:slideDown .1s ease-out;
             -moz-animation:slideDown .1s ease-out;
@@ -70,38 +63,13 @@
                 -o-animation:slideUp .1s ease-out;
                     animation:slideUp .1s ease-out;
         }
-
     </style>
 </head>
 <body>
     <vs-navbar></vs-navbar>
     <div ng-controller="tableController as vm">
-        <h1>Custom Table test</h1>
+        <h1>Custom Table Demo</h1>
 
-
-<!--
-        <table class="table table-hover table-striped" >
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Country</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="row in vm.data"
-                    expand="vm.getChildren"
-                    data-key="{{row.id}}"
-                    data-parent="{{row.parent}}">
-                    <td><i class="fa" ng-class="{'fa-mail-reply': row.parent}" aria-hidden="true"></i></td>
-                    <td>{{row.name}}</td>
-                    <td>{{row.age}}</td>
-                    <td>{{row.country}}</td>
-                </tr>
-            </tbody>
-        </table>
--->
         <custom-table data="vm.data" get-children="vm.getChildren(id)" >
                 <header>Name</header>
                 <cell>
@@ -121,11 +89,7 @@
                 <header>Country</header>
                 <cell>{{row.country}}</cell>
         </custom-table>
-
     </div>
-
-  <script src="/jquery-3.1.0.js"></script>
-
     <script src="/bundle.js"></script>
 </body>
 </html>

@@ -1,30 +1,48 @@
-module.exports = function(ngModule) {
-
-    ngModule.directive('customTable', function () {
-        return {
-            restrict: 'AE',
-            replace: true,
-            scope:{
-                data:'=',
-                getChildren:'&'
+angular.module('customTable',[]).directive('customTable', function () {
+    return {
+        restrict: 'AE',
+        replace: true,
+        scope:{
+            data:'=',
+            getChildren:'&'
+        },
+        transclude: {
+            'header':'header',
+            'cell':'cell'
             },
-            transclude: {
-                'header':'header',
-                'cell':'cell'
-                },
-            link: function (scope,el,attr,ctrl,transclude) {
-                var headerElement = el.find('thead');
-                transclude(scope,function(clone){
-                    var headerRow = angular.element('<tr></tr>');
-                    headerRow.append('<th class="iconColumn"></th>');
-                    headerRow.append(clone);
-                    headerElement.append(headerRow);
-                },headerElement,'header');
-            },
-            template: require('./customTable.html')
-        };
-    })
-    .directive('cell', function(){
+        link: function (scope,el,attr,ctrl,transclude) {
+            var headerElement = el.find('thead');
+            transclude(scope,function(clone){
+                var headerRow = angular.element('<tr></tr>');
+                headerRow.append('<th class="iconColumn"></th>');
+                headerRow.append(clone);
+                headerElement.append(headerRow);
+            },headerElement,'header');
+        },
+        template: '<div>' +
+                    '<table-container>' +
+                        '<header-section>' +
+                        '</header-section>' +
+                        '<body-section>' +
+                            '<row ng-repeat="row in data"' +
+                                'data-index="{{$index}}"' +
+                                'data-key="{{row.id}}"' +
+                                'data-parent="{{row.parent}}"' +
+                                'ng-class="{' +
+                                    ' \'child-row\':row.parent,' +
+                                    ' \'parent-row\' : !row.parent' +
+                                '}">' +
+                                '<cell class="iconColumn">' +
+                                    '<i class="fa" ng-class="{\'fa-mail-reply\': row.parent}" aria-hidden="true"></i>' +
+                                '</cell>' +
+                                '<custom-cells>' +
+                                '</custom-cells>' +
+                            '</row>' +
+                        '</body-section>' +
+                    '</table-container>' +
+                '</div>'
+        }
+    }).directive('cell', function(){
         return {
             restrict: 'E',
             replace:true,
@@ -39,8 +57,7 @@ module.exports = function(ngModule) {
                 });
             }
         }
-    })
-    .directive('parent', function(){
+    }).directive('parent', function(){
         return {
             restrict: 'E',
             transclude:true,
@@ -54,40 +71,35 @@ module.exports = function(ngModule) {
             transclude:true,
             template:'<ng-transclude ng-if="row.parent" ></ng-transclude>'
         }
-    })
-    .directive('headerSection', function(){
+    }).directive('headerSection', function(){
         return {
             restrict: 'E',
             replace:true,
             transclude:true,
             template:'<thead ng-transclude></thead>'
         }
-    })
-    .directive('bodySection', function(){
+    }).directive('bodySection', function(){
         return {
             restrict: 'E',
             replace:true,
             transclude:true,
             template:'<tbody ng-transclude></tbody>'
         }
-    })
-    .directive('tableContainer', function(){
+    }).directive('tableContainer', function(){
         return {
             restrict: 'E',
             replace:true,
             transclude:true,
             template:'<table class="table table table-hover table-striped" ng-transclude></table>'
         }
-    })
-    .directive('header', function(){
+    }).directive('header', function(){
         return {
             restrict: 'E',
             replace:true,
             transclude:true,
             template:'<th ng-transclude></th>'
         }
-    })
-    .directive('row', function(){
+    }).directive('row', function(){
         return {
             restrict: 'EA',
             replace: true,
@@ -138,4 +150,4 @@ module.exports = function(ngModule) {
             }
         };
     });
-}
+
