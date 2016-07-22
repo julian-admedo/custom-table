@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html ng-app="app" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>C - table</title>
+    <title>Custom table demo</title>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
@@ -84,6 +84,11 @@
                 <header>Age</header>
                 <cell>
                     <input type='text' ng-model='row.age'></input>
+                </cell>
+
+                <header>Town</header>
+                <cell>
+                    <input type='text' ng-model='row.town'></input>
                 </cell>
 
                 <header>Country</header>
