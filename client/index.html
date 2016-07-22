@@ -68,6 +68,7 @@
         }
     </style>
 </head>
+
 <body>
     <div ng-controller="tableController as vm">
         <h1>Custom Table Demo</h1>
@@ -76,9 +77,9 @@
 
                 <column>
                     <header>Name</header>
-                    <template parent>
+                    <template>
                         <input type="text" ng-model="row.name" />
-                        <button class="btn" ng-click="vm.buttonClick(row.name)">Click me</button>
+                        <button class="btn btn-sm" ng-click="vm.buttonClick(row.name)">Click me</button>
                     </template>
                 </column>
 

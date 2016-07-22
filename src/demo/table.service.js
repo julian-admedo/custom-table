@@ -10,7 +10,6 @@ module.exports = function(ngModule){
             }
             ,
             getChildren: function(key) {
-                console.log('get children called with key ' + key);
                 var children;
                 switch (parseInt(key,10)) {
                     case 1:

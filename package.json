@@ -1,7 +1,7 @@
 {
   "name": "custom-table",
   "version": "1.0.0",
-  "description": "Custom table test",
+  "description": "Custom table demo",
   "main": "app.js",
   "scripts": {
     "start": "webpack-dev-server  --content-base client/ ",
@@ -12,8 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "angular": "^1.5.7",
-    "angular-animate": "^1.5.7",
-    "jquery": "^3.1.0"
+    "angular-animate": "^1.5.7"
   },
   "devDependencies": {
     "webpack": "^1.13.1",

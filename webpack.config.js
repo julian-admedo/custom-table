@@ -15,7 +15,6 @@ var config ={
     plugins:[]
     ,
     module:{
-
         loaders:[
              {
                 test: /\.html$/,
@@ -29,11 +28,7 @@ var config ={
                 exclude:/node_modules/
             }
         ]
-
     }
-
 }
-
-//config.plugins.push(new webpack.optimize.UglifyJsPlugin());
 
 module.exports = config;

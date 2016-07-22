@@ -3,15 +3,10 @@ module.exports = function(ngModule){
         function (tableService, $q) {
 
             var vm = this;
-
             vm.data = tableService.getData();
-
-            vm.data2 = tableService.getData();
-
             vm.getChildren = tableService.getChildren;
-
-            vm.buttonClick = function() {
-                alert('button clicked');
+            vm.buttonClick = function(name) {
+                alert('button clicked - ' + name);
             }
 
         }]);

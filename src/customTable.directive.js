@@ -105,16 +105,20 @@ angular.module('customTable',[]).directive('customTable', function () {
                             }
                         }
                         var cell = angular.element('<td>' + content + '</td>');
-                        cell.find('input').on('click', function(e) {
-                            e.stopPropagation();
-                        });
-                        cell.find('button').on('click', function(e) {
-                            e.stopPropagation();
-                        });
+                        stopPropagation(cell);
                         el.parent().append($compile(cell)(scope.$parent));
                     }
                     el.remove();
                 },null,'column');
+
+                function stopPropagation(cell) {
+                    cell.find('input').on('click', function(e) {
+                        e.stopPropagation();
+                    });
+                    cell.find('button').on('click', function(e) {
+                        e.stopPropagation();
+                    });
+                }
             }
         };
     });
