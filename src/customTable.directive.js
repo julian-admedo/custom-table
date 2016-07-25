@@ -17,9 +17,9 @@ angular.module('customTable',[]).directive('customTable', function () {
             var headerElement = el.find('thead');
             transclude(scope, function(columns) {
                 var headerRow = angular.element('<tr></tr>');
-                headerRow.append('<th class="iconColumn"></th>');
+                headerRow.append('<th class="icon-column"></th>');
                 var headers = columns.find('header');
-                for (var i=0;i<headers.length;i++){
+                for (var i=0; i<headers.length; i++) {
                     headerRow.append('<th>' + headers[i].innerHTML + '</th>');
                 }
                 headerElement.append(headerRow);
@@ -31,28 +31,28 @@ angular.module('customTable',[]).directive('customTable', function () {
                     'ng-class="{ \'child-row\':row.parent, \'parent-row\' : !row.parent }">' +
                     '<cells></cells></row></body-section></table-container></div>'
         };
-    }).directive('headerSection', function(){
+    }).directive('headerSection', function() {
         return {
             restrict: 'E',
             replace:true,
             transclude:true,
             template:'<thead ng-transclude></thead>'
         };
-    }).directive('bodySection', function(){
+    }).directive('bodySection', function() {
         return {
             restrict: 'E',
             replace:true,
             transclude:true,
             template:'<tbody ng-transclude></tbody>'
         };
-    }).directive('tableContainer', function(){
+    }).directive('tableContainer', function() {
         return {
             restrict: 'E',
             replace:true,
             transclude:true,
             template:'<table class="table table table-hover table-striped" ng-transclude></table>'
         };
-    }).directive('row', function(){
+    }).directive('row', function() {
         return {
             restrict: 'E',
             replace: true,
