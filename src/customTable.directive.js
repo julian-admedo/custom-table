@@ -7,8 +7,9 @@ angular.module('customTable',[]).directive('customTable', function () {
             data: '=',
             getChildren: '&',
             iconChild: '@',
+            iconParent: '@',
             iconParentExpanded: '@',
-            iconParentCollapsed: '@'
+            className: '@class'
         },
         transclude: {
             'column':'column'
@@ -50,7 +51,7 @@ angular.module('customTable',[]).directive('customTable', function () {
             restrict: 'E',
             replace:true,
             transclude:true,
-            template:'<table class="table table table-hover table-striped" ng-transclude></table>'
+            template:'<table class="{{className}}" ng-transclude></table>'
         };
     }).directive('row', function() {
         return {
@@ -86,10 +87,10 @@ angular.module('customTable',[]).directive('customTable', function () {
         return {
             restrict: 'E',
             link: function (scope, el, attr, ctrl, transclude) {
-                var icon = angular.element('<i class="fa fa-plus" aria-hidden="true"></i>');
+                var icon = angular.element('<i aria-hidden="true"></i>');
                 icon.attr('ng-class', '{"' +
                     scope.iconChild + '": row.parent,"' +
-                    scope.iconParentCollapsed + '": !row.parent && !row.expanded,"' +
+                    scope.iconParent + '": !row.parent && !row.expanded,"' +
                     scope.iconParentExpanded + '": !row.parent && row.expanded}');
                 var iconCell = angular.element('<td class="icon-column"></td>');
                 iconCell.append(icon);

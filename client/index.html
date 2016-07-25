@@ -25,8 +25,6 @@
         .fa-mail-reply {
             margin-left:10px;
             color:#ccc;
-            -ms-transform: rotate(180deg); /* IE 9 */
-            -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
             transform: rotate(180deg);
         }
         @keyframes slideDown{
@@ -76,7 +74,14 @@
     <div ng-controller="tableController as vm" ng-cloak>
         <h1>Custom Table Demo</h1>
 
-        <custom-table vm="vm" data="vm.data" get-children="vm.getChildren(id)" icon-child="fa-mail-reply" icon-parent="fa-plus" icon-parent-expanded="fa-minus" >
+        <custom-table
+        vm="vm"
+        data="vm.data"
+        get-children="vm.getChildren(id)"
+        class="table table table-hover table-striped"
+        icon-child="fa fa-mail-reply"
+        icon-parent="fa fa-plus"
+        icon-parent-expanded="fa fa-minus" >
 
                 <column>
                     <header>Name</header>
