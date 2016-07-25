@@ -32,8 +32,8 @@
                 $scope.$watch('pvm.allSelected', function(selected) {
                     pvm.data.forEach(function(e){
                         e.selected = selected;
-                    })
-                })
+                    });
+                });
             },
             link: function (scope, el, attr, ctrl, transclude) {
                 var columns;
@@ -238,9 +238,9 @@
             return {
                 restrict: 'A',
                 link: function (scope, el) {
-                    el.on("click", function(e) {
+                    el.on('click', function(e) {
                         e.stopPropagation();
-                    })
+                    });
                 }
             };
         });
