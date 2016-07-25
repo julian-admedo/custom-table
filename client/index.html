@@ -6,6 +6,13 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
     <style>
+
+        body { padding-top: 70px; }
+
+        .table>thead {
+            background: #fff;
+        }
+
         h1 {
             text-align: center;
         }
@@ -71,49 +78,58 @@
 </head>
 
 <body>
-    <div ng-controller="tableController as vm" ng-cloak>
-        <h1>Custom Table Demo</h1>
+    <div ng-controller="tableController as vm">
 
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    Custom Table Demo
+                </a>
+            </div>
+        </nav>
         <custom-table
-        vm="vm"
-        data="vm.data"
-        get-children="vm.getChildren(id)"
-        class="table table table-hover table-striped"
-        icon-child="fa fa-mail-reply"
-        icon-parent="fa fa-plus"
-        icon-parent-expanded="fa fa-minus" >
+                vm="vm"
+                data="vm.data"
+                selectable="true"
+                get-children="vm.getChildren(id)"
+                class="table table-hover table-striped"
+                icon-child="fa fa-mail-reply"
+                icon-parent="fa fa-plus"
+                icon-parent-expanded="fa fa-minus"
+                sticky-header="true"
+                sticky-offset="51"
+                >
 
-                <column>
-                    <header>Name</header>
-                    <template parent>
-                        <form class="form form-inline">
-                            <input class="form-control" type="text" ng-model="row.name" />
-                            <button class="btn btn-sm" ng-click="vm.buttonClick(row.name)">Click me</button>
-                        </form>
-                    </template>
-                    <template child>
-                        {{row.name}}
-                    </template>
+            <column>
+                <header>Name</header>
+                <template parent>
+                    <form class="form form-inline">
+                        <input class="form-control" type="text" ng-model="row.name" />
+                        <button class="btn btn-sm" ng-click="vm.buttonClick(row.name)">Click me</button>
+                    </form>
+                </template>
+                <template child>
+                    {{row.name}}
+                </template>
+            </column>
 
-                </column>
+            <column>
+                <header>Age</header>
+                <template parent>
+                    <strong>{{row.age}}</strong>
+                </template>
+                <template child>
+                    <span ng-bind="row.age"></span>
+                </template>
+            </column>
 
-                <column>
-                    <header>Age</header>
-                    <template parent>
-                        <strong>{{row.age}}</strong>
-                    </template>
-                    <template child>
-                        <span ng-bind="row.age"></span>
-                    </template>
-                </column>
-
-                <column>
-                    <header>Country</header>
-                    <template>{{row.country}}</template>
-                </column>
-
+            <column>
+                <header>Country</header>
+                <template>{{row.country}}</template>
+            </column>
         </custom-table>
     </div>
+    <script src="/jquery-3.1.0.min.js"></script>
     <script src="/bundle.js"></script>
 </body>
 </html>
