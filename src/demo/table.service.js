@@ -1,4 +1,4 @@
-module.exports = function(ngModule){
+module.exports = function(ngModule) {
     ngModule.factory('tableService', function ($q) {
         return {
             getData: function() {
@@ -6,9 +6,8 @@ module.exports = function(ngModule){
                     { id: 1, name: 'John', age: 10, town: 'Cambridge', country:'England'},
                     { id: 2, name: 'Jim', age: 20, town: 'Glasgow', country:'Scotland'},
                     { id: 3, name: 'Jane', age: 30,town: 'Dublin', country:'Ireland'},
-                ]
-            }
-            ,
+                ];
+            },
             getChildren: function(key) {
                 var children;
                 switch (parseInt(key,10)) {
@@ -30,7 +29,7 @@ module.exports = function(ngModule){
                             {name: 'Edward', age: 5, country: 'Ireland'},
                             {name: 'Johann', age: 9, country: 'Ireland'},
                             {name: 'Rita', age: 8, country: 'Ireland'}
-                        ]
+                        ];
                         break;
                 }
 
@@ -38,6 +37,6 @@ module.exports = function(ngModule){
                 deferred.resolve(children);
                 return deferred.promise;
             }
-        }
+        };
     });
-}
+};

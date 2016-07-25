@@ -77,12 +77,13 @@
 
                 <column>
                     <header>Name</header>
-                    <template>
+                    <template parent>
                         <form class="form form-inline">
                             <input class="form-control" type="text" ng-model="row.name" />
                             <button class="btn btn-sm" ng-click="vm.buttonClick(row.name)">Click me</button>
                         </form>
                     </template>
+
                 </column>
 
                 <column>

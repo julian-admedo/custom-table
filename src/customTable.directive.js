@@ -28,28 +28,28 @@ angular.module('customTable',[]).directive('customTable', function () {
                     'ng-class="{ \'child-row\':row.parent, \'parent-row\' : !row.parent }">' +
                     '<cells></cells>' +
                     '</row></body-section></table-container></div>'
-        }
+        };
     }).directive('headerSection', function(){
         return {
             restrict: 'E',
             replace:true,
             transclude:true,
             template:'<thead ng-transclude></thead>'
-        }
+        };
     }).directive('bodySection', function(){
         return {
             restrict: 'E',
             replace:true,
             transclude:true,
             template:'<tbody ng-transclude></tbody>'
-        }
+        };
     }).directive('tableContainer', function(){
         return {
             restrict: 'E',
             replace:true,
             transclude:true,
             template:'<table class="table table table-hover table-striped" ng-transclude></table>'
-        }
+        };
     }).directive('row', function(){
         return {
             restrict: 'E',
@@ -79,8 +79,8 @@ angular.module('customTable',[]).directive('customTable', function () {
                     }
                 }
             }
-        }
-    }).directive('cells', function ($compile) {
+        };
+    }).directive('cells', function ($compile, $timeout) {
         return {
             restrict: 'E',
             link: function (scope, el, attr, ctrl, transclude) {
@@ -88,11 +88,12 @@ angular.module('customTable',[]).directive('customTable', function () {
                 icon.attr('ng-class','{"fa-mail-reply": row.parent,"fa-plus": !row.parent && !row.expanded,"fa-minus": !row.parent && row.expanded}');
                 var iconCell = angular.element('<td class="iconColumn"></td>');
                 iconCell.append(icon);
-                el.parent().append($compile(iconCell)(scope.$parent));
+                var row = el.parent();
+                row.append($compile(iconCell)(scope.$parent));
                 transclude(scope,function(columns) {
                     for (var j=0; j< columns.length; j++) {
                         var templates = angular.element(columns[j]).find('template');
-                        var content = "";
+                        var content = '';
                         for (var i=0; i < templates.length; i++){
                             if (templates[i].attributes.child) {
                                 content += '<span ng-if="row.parent">' + templates[i].innerHTML + '</span>';
@@ -105,21 +106,23 @@ angular.module('customTable',[]).directive('customTable', function () {
                             }
                         }
                         var cell = angular.element('<td>' + content + '</td>');
-                        stopPropagation(cell);
-                        el.parent().append($compile(cell)(scope.$parent));
+                        row.append($compile(cell)(scope.$parent));
                     }
+                    stopPropagation(row);
                     el.remove();
+
                 },null,'column');
 
-                function stopPropagation(cell) {
-                    cell.find('input').on('click', function(e) {
-                        e.stopPropagation();
-                    });
-                    cell.find('button').on('click', function(e) {
-                        e.stopPropagation();
+                function stopPropagation(row) {
+                    $timeout(function() {
+                        row.find('input').on('click', function(e) {
+                            e.stopPropagation();
+                        });
+                        row.parent().find('button').on('click', function(e) {
+                            e.stopPropagation();
+                        });
                     });
                 }
             }
         };
     });
-
