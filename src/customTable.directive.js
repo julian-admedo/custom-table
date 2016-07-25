@@ -111,23 +111,22 @@ angular.module('customTable',[]).directive('customTable', function () {
                             }
                         }
                         var cell = angular.element('<td>' + content + '</td>');
+                        cell[0].querySelectorAll('input,button,textarea,select,.form-control').forEach(function(c) {
+                            c.setAttribute('stop-propagate', true);
+                        });
                         row.append($compile(cell)(scope.$parent));
                     }
-                    stopPropagation(row);
                     el.remove();
-
-                },null,'column');
-
-                function stopPropagation(row) {
-                    $timeout(function() {
-                        row.find('input').on('click', function(e) {
-                            e.stopPropagation();
-                        });
-                        row.parent().find('button').on('click', function(e) {
-                            e.stopPropagation();
-                        });
-                    });
-                }
+                }, null, 'column');
+            }
+        };
+    }).directive('stopPropagate', function() {
+        return {
+            restrict: 'A',
+            link: function (scope, el) {
+                el.on("click", function(e) {
+                    e.stopPropagation();
+                })
             }
         };
     });
