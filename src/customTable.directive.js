@@ -3,9 +3,12 @@ angular.module('customTable',[]).directive('customTable', function () {
         restrict: 'E',
         replace: true,
         scope: {
-            vm:'=',
-            data:'=',
-            getChildren:'&'
+            vm: '=',
+            data: '=',
+            getChildren: '&',
+            iconChild: '@',
+            iconParentExpanded: '@',
+            iconParentCollapsed: '@'
         },
         transclude: {
             'column':'column'
@@ -26,8 +29,7 @@ angular.module('customTable',[]).directive('customTable', function () {
                     '<row ng-repeat="row in data track by $index"' +
                     'ng-click="toggle(row,$index)"' +
                     'ng-class="{ \'child-row\':row.parent, \'parent-row\' : !row.parent }">' +
-                    '<cells></cells>' +
-                    '</row></body-section></table-container></div>'
+                    '<cells></cells></row></body-section></table-container></div>'
         };
     }).directive('headerSection', function(){
         return {
@@ -85,8 +87,11 @@ angular.module('customTable',[]).directive('customTable', function () {
             restrict: 'E',
             link: function (scope, el, attr, ctrl, transclude) {
                 var icon = angular.element('<i class="fa fa-plus" aria-hidden="true"></i>');
-                icon.attr('ng-class','{"fa-mail-reply": row.parent,"fa-plus": !row.parent && !row.expanded,"fa-minus": !row.parent && row.expanded}');
-                var iconCell = angular.element('<td class="iconColumn"></td>');
+                icon.attr('ng-class', '{"' +
+                    scope.iconChild + '": row.parent,"' +
+                    scope.iconParentCollapsed + '": !row.parent && !row.expanded,"' +
+                    scope.iconParentExpanded + '": !row.parent && row.expanded}');
+                var iconCell = angular.element('<td class="icon-column"></td>');
                 iconCell.append(icon);
                 var row = el.parent();
                 row.append($compile(iconCell)(scope.$parent));

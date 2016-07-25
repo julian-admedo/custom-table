@@ -15,9 +15,12 @@
         .parent-row {
             cursor: pointer;
         }
-        .iconColumn
+        .table>tbody>tr>td
         {
-            width:50px;
+            vertical-align:middle;
+        }
+        .table>tbody>tr>td.icon-column {
+            width: 50px;
         }
         .fa-mail-reply {
             margin-left:10px;
@@ -73,7 +76,7 @@
     <div ng-controller="tableController as vm" ng-cloak>
         <h1>Custom Table Demo</h1>
 
-        <custom-table vm="vm" data="vm.data" get-children="vm.getChildren(id)" >
+        <custom-table vm="vm" data="vm.data" get-children="vm.getChildren(id)" icon-child="fa-mail-reply" icon-parent="fa-plus" icon-parent-expanded="fa-minus" >
 
                 <column>
                     <header>Name</header>
@@ -82,6 +85,9 @@
                             <input class="form-control" type="text" ng-model="row.name" />
                             <button class="btn btn-sm" ng-click="vm.buttonClick(row.name)">Click me</button>
                         </form>
+                    </template>
+                    <template child>
+                        {{row.name}}
                     </template>
 
                 </column>
