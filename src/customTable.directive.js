@@ -42,7 +42,9 @@
                     buildHeader(el.find('thead'));
                 }, null, 'column');
 
-                stickyHeader(el.find('thead'));
+                if (scope.stickyHeader) {
+                    stickyHeader(el.find('thead'));
+                }
 
                 function buildHeader(thead){
                     var tr = angular.element('<tr></tr>');
@@ -74,19 +76,16 @@
                     var table = el.find('table').css('background','transparent');
                     var clone;
 
-                    if (scope.stickyHeader) {
-                        angular.element($window).on('scroll', checkScroll).on('resize', setWidth);
-                    }
+                    angular.element($window).on('scroll', checkScroll).on('resize', setWidth);
 
                     function checkScroll() {
                         var headPos = thead[0].getBoundingClientRect().top;
                         if (headPos <= offset) {
                            makeClone();
                         } else {
-                            removeClone();
+                            destroyClone();
                         }
                     }
-
                     function makeClone() {
                         if (!clone) {
                             clone = table.clone();
@@ -106,23 +105,18 @@
                             el.append(clone);
                         }
                     }
-
-                    function removeClone() {
+                    function destroyClone() {
                         if (clone) {
                             clone.remove();
                             clone = undefined;
                         }
                     }
-
                     function setWidth() {
                         if (clone) {
                             clone.width(table.width());
                         }
                     }
                 }
-
-
-
             },
             template:   '<div><table-container><header-section/><body-section>' +
                         '<row ng-repeat="row in data track by $index"' +
@@ -206,7 +200,7 @@
                                 }
                             }
                             var cell = angular.element('<td>' + content + '</td>');
-                            cell[0].querySelectorAll('input,button,textarea,select,.form-control').forEach(function(c) {
+                            cell[0].querySelectorAll('input,button,textarea,select,.form-control,.editable,.editable-input').forEach(function(c) {
                                 c.setAttribute('stop-propagate', true);
                             });
                             row.append($compile(cell)(scope.$parent));

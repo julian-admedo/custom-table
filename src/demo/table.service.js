@@ -1,8 +1,9 @@
 module.exports = function(ngModule) {
-    ngModule.factory('tableService', function ($q) {
+    ngModule.factory('tableService', function ($q, $timeout) {
         return {
             getData: function() {
-                return [
+
+                var data = [
                     { id: 1, name: 'John', age: 10, town: 'Cambridge', country:'England'},
                     { id: 2, name: 'Jim', age: 20, town: 'Glasgow', country:'Scotland'},
                     { id: 3, name: 'Jane', age: 30,town: 'Dublin', country:'Ireland'},
@@ -28,6 +29,14 @@ module.exports = function(ngModule) {
                     { id: 2, name: 'Jim', age: 20, town: 'Glasgow', country:'Scotland'},
                     { id: 3, name: 'Jane', age: 30,town: 'Dublin', country:'Ireland'}
                 ];
+                var deferred = $q.defer();
+                $timeout(function() {
+                    deferred.resolve(data);
+                }, 3000);
+
+                return deferred.promise;
+
+
             },
             getChildren: function(key) {
                 var children;
@@ -55,7 +64,10 @@ module.exports = function(ngModule) {
                 }
 
                 var deferred = $q.defer();
-                deferred.resolve(children);
+                $timeout(function() {
+                    deferred.resolve(children);
+                }, 3000);
+
                 return deferred.promise;
             }
         };
